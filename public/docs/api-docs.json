@@ -1,0 +1,1287 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LA GLORIA STORE API",
+        "description": "THE OFFICIAL LA GLORIA F.C. STORE",
+        "contact": {
+            "email": "dieztomasjoaquin@gmail.com"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/rest/brands": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get all brands",
+                "description": "Returns a list of all brands",
+                "operationId": "6497956451bb6ed13ec486c1576f8253",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BrandResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/rest/brands/id/{id}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get a brand by ID",
+                "description": "Returns a single brand by its ID",
+                "operationId": "c6a53233f1aa1d5a8500e2665700a828",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the brand",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BrandResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Brand not found"
+                    }
+                }
+            }
+        },
+        "/rest/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories",
+                "description": "Returns a list of all categories",
+                "operationId": "6123f24a834bf0cdb03f669352d73bcc",
+                "responses": {
+                    "200": {
+                        "description": "List of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CategoryResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No categories found"
+                    }
+                }
+            }
+        },
+        "/rest/categories/id/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get category by ID",
+                "description": "Returns a single category by ID",
+                "operationId": "c30155fb7d3fec06ec6ea24e269cfff5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoryResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
+        "/rest/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get all the clients",
+                "description": "Get a paginated list of all the clients in the database",
+                "operationId": "12933d30537a7ea414c6230b02190aa4",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ClientResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Store a newly created resource in storage and return the new client.",
+                "description": "Create a new client in the database with the given email address and return the newly created client. The email address must not be already present in the clients database.",
+                "operationId": "8caae381effbc89b26e5b05f80c86798",
+                "requestBody": {
+                    "description": "Client email address.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "The email address of the new client. Must not be already present in the clients database.",
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Newly created client.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ClientResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "description": "Validation errors.",
+                                            "properties": {
+                                                "email": {
+                                                    "description": "The email validation error.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/clients/create": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Show the form for creating a new client",
+                "description": "Returns a JSON object with the form fields for creating a new client.",
+                "operationId": "bd89493e086bbc5784ca7b96900b49b4",
+                "responses": {
+                    "200": {
+                        "description": "JSON object with the form fields for creating a new client.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "fields": {
+                                            "description": "The form fields for creating a new client.",
+                                            "properties": {
+                                                "email": {
+                                                    "description": "The email field.",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "example": "email"
+                                                        },
+                                                        "label": {
+                                                            "type": "string",
+                                                            "example": "Email"
+                                                        },
+                                                        "required": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/clients/id/{id}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Retrieve a specific client",
+                "description": "Retrieves a specific client by ID.",
+                "operationId": "6dda62dab8474b03d2ea808e9393085c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the client to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClientResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
+        "/rest/clients/email/{email}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get client by email",
+                "operationId": "01db18d1750534da7f33c98b233ec498",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Client's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClientResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
+        "/rest/order-details": {
+            "get": {
+                "tags": [
+                    "Order Details"
+                ],
+                "summary": "Get a list of all order details",
+                "description": "Returns a paginated list of all order details in the application",
+                "operationId": "65c1a0b9ac70c18ba1cf5235a0d2e19a",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrderDetailResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/order-details/create": {
+            "get": {
+                "tags": [
+                    "Order Details"
+                ],
+                "summary": "Show the form for creating a new order detail in JSON format.",
+                "description": "Product amount must be at least 1, Shopping Cart ID must be of a shopping cart already in the database, Product ID must be of a product already in the database",
+                "operationId": "createOrderDetail",
+                "responses": {
+                    "200": {
+                        "description": "Returns the form fields in JSON format",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "fields": {
+                                            "properties": {
+                                                "product_amount": {
+                                                    "description": "Product Amount field with validation rules",
+                                                    "type": "number",
+                                                    "example": {
+                                                        "type": "number",
+                                                        "label": "Product Amount",
+                                                        "required": true
+                                                    }
+                                                },
+                                                "shopping_cart_id": {
+                                                    "description": "Shopping Cart ID field with validation rules",
+                                                    "type": "number",
+                                                    "example": {
+                                                        "type": "number",
+                                                        "label": "Shopping Cart ID",
+                                                        "required": true
+                                                    }
+                                                },
+                                                "product_id": {
+                                                    "description": "Product ID field with validation rules",
+                                                    "type": "number",
+                                                    "example": {
+                                                        "type": "number",
+                                                        "label": "Product ID",
+                                                        "required": true
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/order-details/id/{id}": {
+            "get": {
+                "tags": [
+                    "Order Details"
+                ],
+                "summary": "Get a single order detail",
+                "description": "Returns the order detail identified by the given ID",
+                "operationId": "getOrderDetailById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order detail to return",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderDetailResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                }
+            }
+        },
+        "/rest/order-details/shopping-cart/{shoppingCartId}": {
+            "get": {
+                "tags": [
+                    "Order Details"
+                ],
+                "summary": "Get order details by shopping cart",
+                "description": "Get the order details associated with a specific shopping cart.",
+                "operationId": "ed91ef1700d80037e5e216a345ee6688",
+                "parameters": [
+                    {
+                        "name": "shoppingCartId",
+                        "in": "path",
+                        "description": "Shopping cart ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved order details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/OrderDetailResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shopping cart not found"
+                    }
+                }
+            }
+        },
+        "/rest/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Display a listing of products",
+                "description": "Get a paginated list of products with their details",
+                "operationId": "a2e6f3dd87f8986f420c13f1b2244d16",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProductResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/rest/products/id/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Show a single product",
+                "description": "Display the specified product.",
+                "operationId": "showProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product to show",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                }
+            }
+        },
+        "/rest/products/brand/{brandName}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a paginated list of products filtering by brand name",
+                "description": "Returns a list of products based on the provided brand name.",
+                "operationId": "8d1e995bdd6f271d30de511b4afdcbdc",
+                "parameters": [
+                    {
+                        "name": "brandName",
+                        "in": "path",
+                        "description": "The name of the brand",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The brand doesnt exist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/products/category/{categoryName}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a paginated list of products filtering by category name",
+                "description": "Returns a list of products based on the provided category name.",
+                "operationId": "85106f6f2c5d19b3c4844b9025efe1ed",
+                "parameters": [
+                    {
+                        "name": "categoryName",
+                        "in": "path",
+                        "description": "The name of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The category doesnt exist."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/products/category/{categoryName}/brand/{brandName}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get products by category and brand",
+                "description": "Retrieves a paginated list of products belonging to a specific category and brand.",
+                "operationId": "getProductsByCategoryAndBrand",
+                "parameters": [
+                    {
+                        "name": "categoryName",
+                        "in": "path",
+                        "description": "Category name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "brandName",
+                        "in": "path",
+                        "description": "Brand name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of products retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProductResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The category or brand doesnt exist."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/shopping-carts": {
+            "get": {
+                "tags": [
+                    "Shopping Carts"
+                ],
+                "summary": "Display a listing of the resource.",
+                "description": "Returns a paginated collection of shopping carts.",
+                "operationId": "c57e5c04877034b17ccee2157a1dceaf",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShoppingCartResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Shopping Carts"
+                ],
+                "summary": "Create a new shopping cart",
+                "description": "Creates a new shopping cart with the given data. Validates the stock consistency for each product sold and updates the stock accordingly. The total price must be computed by the client.",
+                "operationId": "2747140f2c3e93c38bca084072bfc999",
+                "requestBody": {
+                    "description": "Request body containing the shopping cart and order details data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "total_price",
+                                    "date",
+                                    "client_id",
+                                    "order_details"
+                                ],
+                                "properties": {
+                                    "total_price": {
+                                        "description": "The total price of the shopping cart",
+                                        "type": "number",
+                                        "example": 50
+                                    },
+                                    "date": {
+                                        "description": "The date of the shopping cart in YYYY-MM-DD format",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2022-05-12"
+                                    },
+                                    "client_id": {
+                                        "description": "The ID of the client that owns the shopping cart",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "order_details": {
+                                        "description": "The array of order details for the shopping cart",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "product_id",
+                                                "product_amount"
+                                            ],
+                                            "properties": {
+                                                "product_id": {
+                                                    "description": "The ID of the product to be added to the shopping cart",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "product_amount": {
+                                                    "description": "The amount of the product to be added to the shopping cart",
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Shopping cart created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ShoppingCartResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The error message describing why the request was unprocessable",
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "description": "The validation errors",
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "The error message describing the internal server error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/shopping-carts/id/{id}": {
+            "get": {
+                "tags": [
+                    "Shopping Carts"
+                ],
+                "summary": "Retrieve a specific shopping cart",
+                "description": "Retrieves a specific shopping cart by ID.",
+                "operationId": "57ba606c56007a652a1d3e0623b55d46",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the shopping cart to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shopping cart retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ShoppingCartResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Shopping cart not found"
+                    }
+                }
+            }
+        },
+        "/rest/shopping-carts/create": {
+            "get": {
+                "tags": [
+                    "Shopping Carts"
+                ],
+                "summary": "Show the form for creating a new shopping cart in JSON format.",
+                "description": "Order Details array must have at least one element. The Client ID must be of a client already in the database. Total price must be at least 0 included",
+                "operationId": "16c02af9c4fa2f6512f5b2e806ea21e3",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "fields": {
+                                            "properties": {
+                                                "total_price": {
+                                                    "description": "Total price of the shopping cart",
+                                                    "type": "number",
+                                                    "example": 94
+                                                },
+                                                "date": {
+                                                    "description": "Date of the shopping cart",
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2023-05-12"
+                                                },
+                                                "client_id": {
+                                                    "description": "Client ID of the shopping cart",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "order_details": {
+                                                    "description": "Array of Order Details objects",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "product_id": {
+                                                                "description": "Product ID of the Order Detail",
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "product_amount": {
+                                                                "description": "Amount of the Order Detail",
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rest/shopping-carts/history/{email}": {
+            "get": {
+                "tags": [
+                    "Shopping Carts"
+                ],
+                "summary": "Retrieve client's shopping cart history",
+                "description": "Retrieves the shopping cart history for a specific client.",
+                "operationId": "clientHistory",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Client email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ShoppingCartResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BrandResource": {
+                "title": "Brand resource",
+                "description": "Represents a Brand",
+                "properties": {
+                    "id": {
+                        "description": "The brand's ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "The brand's name",
+                        "type": "string",
+                        "example": "Nike"
+                    },
+                    "enable": {
+                        "description": "The enabled state of the brand",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "The datetime when the brand was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-11 13:42:56"
+                    },
+                    "updated_at": {
+                        "description": "The datetime when the brand was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-11 13:42:56"
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryResource": {
+                "title": "Category Resource",
+                "description": "Represents a category",
+                "properties": {
+                    "id": {
+                        "description": "The ID of the category",
+                        "type": "integer",
+                        "example": "2"
+                    },
+                    "name": {
+                        "description": "The name of the category",
+                        "type": "string",
+                        "example": "Shoes"
+                    },
+                    "enable": {
+                        "description": "The enabled state of the category",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "The date and time when the category was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The date and time when the category was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ClientResource": {
+                "title": "ClientResource",
+                "description": "Represents a Client",
+                "properties": {
+                    "id": {
+                        "description": "The client ID",
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "email": {
+                        "description": "The client email",
+                        "type": "string",
+                        "example": "john.doe@gmail.com"
+                    },
+                    "created_at": {
+                        "description": "The datetime when the client was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The datetime when the client was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "OrderDetailResource": {
+                "title": "Order Detail Resource",
+                "description": "Represents an Order detail",
+                "properties": {
+                    "id": {
+                        "description": "The ID of the order detail",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "product_amount": {
+                        "description": "The amount of the product in the order detail",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/ProductResource"
+                    },
+                    "created_at": {
+                        "description": "The date and time when the order detail was created",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-12 14:30:00"
+                    },
+                    "updated_at": {
+                        "description": "The date and time when the order detail was last updated",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-12 14:32:00"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductResource": {
+                "title": "ProductResource",
+                "description": "Represents a Product",
+                "properties": {
+                    "id": {
+                        "description": "The product's unique identifier",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The name of the product",
+                        "type": "string"
+                    },
+                    "size": {
+                        "description": "The size of the product",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "The URL of the product's image",
+                        "type": "string"
+                    },
+                    "price": {
+                        "description": "The price of the product",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "enable": {
+                        "description": "The enabled state of the product",
+                        "type": "boolean"
+                    },
+                    "stock": {
+                        "description": "The stock of the product",
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    "brand": {
+                        "$ref": "#/components/schemas/BrandResource"
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/CategoryResource"
+                    },
+                    "created_at": {
+                        "description": "The date and time when the product was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "The date and time when the product was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ShoppingCartResource": {
+                "title": "ShoppingCartResource",
+                "description": "Represents a Shopping cart",
+                "properties": {
+                    "id": {
+                        "description": "Represents a shopping cart resource in the application.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "total_price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 99.99
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-12T15:30:00Z"
+                    },
+                    "client": {
+                        "$ref": "#/components/schemas/ClientResource"
+                    },
+                    "orders_detail": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderDetailResource"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-12T15:30:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-05-12T15:30:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
